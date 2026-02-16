@@ -36,4 +36,21 @@ app.post('/create-post', upload.single('image'), async(req,res) => {
     }
 })
 
+app.get('/posts', async(req,res) => {
+    try {
+        const posts = await postModel.find().sort({ createdAt: -1 });
+        return res.status(200).json({
+            message: 'Posts retrieved successfully',
+            posts
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error retrieving posts',
+            error: error.message
+        });
+    }
+})
+
+
+
 module.exports = app;
