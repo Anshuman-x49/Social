@@ -15,7 +15,7 @@ const Createpost = () => {
     await axios.post('http://localhost:3000/create-post', formData)
     .then(() => {
 
-      navigate('/feed')
+      navigate('/')
       console.log('Post created successfully!')
       e.target.reset()
 
