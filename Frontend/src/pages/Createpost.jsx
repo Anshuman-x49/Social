@@ -1,16 +1,43 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Createpost = () => {
+
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    const formData = new FormData(e.target);
+
+    await axios.post('http://localhost:3000/create-post', formData)
+    .then(() => {
+
+      navigate('/feed')
+      console.log('Post created successfully!')
+      e.target.reset()
+
+    })
+    .catch((err) => {
+      console.log(err)
+      alert('Error creating post. Please try again.')
+    })
+  }
+
   return (
-    <div>
-      <Navbar />
-      <form action="/createpost" method="post">
-        <input type="image" name="image" placeholder="Image" />
-        <input type="text" name="caption" placeholder="Caption" />
-        <button type="submit">Create Post</button>
-      </form>
-    </div>
+    <>
+        <Navbar />
+        <section className='create-post-section'>
+            <h1>Create Post</h1>
+            <form action="" onSubmit={handleSubmit}>
+                <input type='file' name='image' accept='image/*' />
+                <input type="text" name='caption' placeholder='Add a caption...' />
+                <button type='submit'>Submit</button>
+            </form>
+        </section>
+    </>
   )
 }
 
